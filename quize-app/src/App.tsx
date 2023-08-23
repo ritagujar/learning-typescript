@@ -6,7 +6,7 @@ import { QuestionState, Difficulty } from "./API";
 type AnswerObject = {
   question: string;
   answer: string;
-  correct: string;
+  correct: boolean;
   correctAnswer: string;
 };
 
@@ -36,14 +36,36 @@ function App() {
     setLoading(false);
   };
 
-  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
+  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!gameOver) {
+      // Users Answer
+      const answer = e.currentTarget.value;
+
+      // Check answer againts correct answer
+      const correct = questions[number].correct_answer === answer;
+
+      // Add score if answer is correct
+      if (correct) setScore((prev) => prev + 1);
+
+      // Save answer in the array for user answer
+
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer,
+      };
+
+      setUserAnswers((prev) => [...prev, answerObject]);
+    }
+  };
 
   const nextQuestion = () => {};
 
   return (
     <div className="App">
       <h1>REACT QUIZ</h1>
-      {gameOver || userAnswers.length == TOTAL_QUESTIONS ? (
+      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <button className="start" onClick={startTivia}>
           Start
         </button>
