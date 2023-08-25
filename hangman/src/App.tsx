@@ -26,7 +26,9 @@ function App() {
       <div style={{ fontSize: "2rem", textAlign: "center" }}>Loss Win</div>
       <HangmanDrawing />
       <HangmanWords />
-      <Keyboard />
+      <div style={{ alignSelf: "stretch" }}>
+        <Keyboard />
+      </div>
     </div>
   );
 }
